@@ -3,7 +3,9 @@
 CFLAGS+=-Wall -Wextra -std=c17 -g -O0
 
 
-convert: convert.o
+./src/simpleFlight: ./src/simpleFlight.o
 
 clean:
-	-rm -f convert.o convert
+	-rm -f ./src/simpleFlight ./src/simpleFlight.o
+
+

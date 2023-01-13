@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/workspaces/simpleFlight",
+            "binaryPath": "/workspaces/simpleFlight/convert",
+            "binaryArgs": []
+        }
+    ]
+}
