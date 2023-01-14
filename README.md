@@ -30,6 +30,10 @@ sudo apt-get install libopenal-dev
 git clone http://github.com/zaphoyd/websocketpp.git
 
 
+https://github.com/ExperimentalAvionics/GlassPanel/tree/master/js
+
+
+
 
 
 
