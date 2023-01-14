@@ -19,7 +19,7 @@ aircraft config files  -----> |   + websockets   |
                                     \ /     |
                                |---------------------|
                                |  Browser            |
-                               |   running cesium js |
+     joystick ---------------> |   running cesium js |
                                |   + joystick        |
                                |---------------------|
                                       / \
