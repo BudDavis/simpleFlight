@@ -23,7 +23,13 @@ aircraft config files  -----> |   + websockets   |
                                |   running cesium js |
                                |   + joystick        |
                                |---------------------|
-
+                                      / \
+                                       |
+                                       |
+                                       |
+                                       |
+                                      \ /
+                                Cesium Terrain service
  ```
  
  
