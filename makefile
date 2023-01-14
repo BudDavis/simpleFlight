@@ -1,7 +1,12 @@
 
 
-CFLAGS+=-Wall -Wextra -std=c17 -g -O0
+CC=g++
 
+
+JSBSIM_INC=/usr/local/include/JSBSim
+
+CXXFLAGS+=-Wall -Wextra -std=c++14 -g -O0
+CPPFLAGS+=-I${JSBSIM_INC}
 
 ./src/simpleFlight: ./src/simpleFlight.o
 
