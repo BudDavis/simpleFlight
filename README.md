@@ -7,8 +7,32 @@
  A browswer window running Cesium JS for the out the window.
  
  a linux program running jsbsim and additional models.wget
+ ```pre
+                               |------------------|
+                               |   jsbsim         |
+aircraft config files  -----> |   + websockets   |
+                               |   = simpleFLight |
+                               |------------------|
+                                     |     / \
+                       AC position   |      |   Height of Terrain                       
+                                     |      |   Joystick events
+                                     |      |    (port 4000)
+                                    \ /     |
+                               |---------------------|
+                               |  Browser            |
+                               |   running cesium js |
+                               |   + joystick        |
+                               |---------------------|
 
-
+ ```
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  =======================================================
  
 https://github.com/JSBSim-Team/jsbsim/releases/download/v1.1.13/JSBSim-devel_1.1.13-986.focal.amd64.deb
