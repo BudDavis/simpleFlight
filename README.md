@@ -32,6 +32,9 @@ git clone http://github.com/zaphoyd/websocketpp.git
 
 https://github.com/ExperimentalAvionics/GlassPanel/tree/master/js
 
+https://github.com/draw2soon/Flight-Instruments
+
+https://github.com/pmatigakis/avionics.js/blob/master/demo/js/demo_app.js
 
 
 
