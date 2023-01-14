@@ -1,17 +1,22 @@
 
 
-#include <stdio.h>
+#include <iostream>
 #include <string>
 
 #include <FGFDMExec.h>
+#include "interface.h"
+
 
 JSBSim::FGFDMExec fdmex;
-
-
+jsbsimInterface_t iface;
 
 int main(int argc, char* argv[])
 {
-
+      std::cout << "count of args " << argc << std::endl;
+      for (int i=0;i<argc;i++)
+      {
+         std::cout << "  " << argv[i] << std::endl;
+      }
 /* the arguments must be:
  *                  websocket port
  *                  aircraft xml file
