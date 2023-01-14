@@ -1,12 +1,11 @@
 # simpleFlight
  
- A very simple flight simulator using jsbsim and cesium js.
- 
- It contains 3 pieces:
+ Simple flight simulator using jsbsim, websocketpp and cesium js.
  
  A browswer window running Cesium JS for the out the window.
  
- a linux program running jsbsim and additional models.wget
+ a linux program running jsbsim and additional models.
+
  ```pre
                                |------------------|
                                |   jsbsim         |
@@ -70,4 +69,4 @@ https://github.com/pmatigakis/avionics.js/blob/master/demo/js/demo_app.js
 
 
 
-
+git clone https://github.com/JSBSim-Team/jsbsim.git
