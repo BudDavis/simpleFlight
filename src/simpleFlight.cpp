@@ -222,7 +222,9 @@ public:
         // Broadcast count to all connections
         con_list::iterator it;
         for (it = m_connections.begin(); it != m_connections.end(); ++it) {
-            m_endpoint.send(*it,val.str(),websocketpp::frame::opcode::text);
+            if (Sim) {
+               m_endpoint.send(*it,Sim->exportData() ,websocketpp::frame::opcode::text);
+            }
         }
         
         if (Sim) {
