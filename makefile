@@ -6,12 +6,17 @@ JSBSIM_LIB+=/usr/local/lib
 JSBSIM_INC+=/usr/local/include/JSBSim
 
 CXXFLAGS+=-Wall -Wextra -std=c++14 -g -O0
-CPPFLAGS+=-I${JSBSIM_INC} -I src/include
-LDLIBS+=-L${JSBSIM_LIB} -lJSBSim
+CPPFLAGS+=-I${JSBSIM_INC} \
+          -I src/include \
+          -I src/
 
-./src/simpleFlight: ./src/simpleFlight.o ./src/interface.cpp
+LDLIBS+= -lboost_system -lpthread -lrt -L${JSBSIM_LIB} -lJSBSim
+
+SIMPLEFLIGHT_OBJ=src/simpleFlight.o src/sim.o src/simConnection.o
+
+./src/simpleFlight: ${SIMPLEFLIGHT_OBJ}
 
 clean:
-	-rm -f ./src/simpleFlight ./src/simpleFlight.o
+	-rm -f ./src/simpleFlight  ${SIMPLEFLIGHT_OBJ}
 
 
