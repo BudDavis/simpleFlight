@@ -8,9 +8,6 @@
 #include <boost/utility/enable_if.hpp>
 #include <FGFDMExec.h>
 
-//include "json.hpp"
-
-
 
 class sim
 {

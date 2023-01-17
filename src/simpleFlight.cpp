@@ -1,114 +1,3 @@
-#if 0
-#include <unistd.h>
-
-#include <iostream>
-#include <string>
-
-#include <FGFDMExec.h>
-
-#include "json.hpp"
-#include "interface.h"
-
-
-JSBSim::FGFDMExec fdmex;
-
-std::string copy_from_JSBSim ()
-{
-}
-
-void copy_to_JSBSim (std::string S)
-{
-}
-
-//termsVec in  = {terms_t("aaa","bbbb", []{return fdmex.GetPropagate()->GetLocation().GetLongitudeDeg(); } ) };
-//termsVec in  = {terms_t("aaa","bbbb", []{return fdmex.GetPropagate()->GetLocation().GetLongitudeDeg() } ) };
-//termsVec out = {terms_t("aaa","bbb")};
-//fdmex.GetPropagate()->GetLocation().GetLongitudeDeg()
-#if 0
-    SG_LOG( SG_FLIGHT, SG_INFO, "  Bank Angle: "
-            << Propagate->GetEuler(FGJSBBase::ePhi)*RADTODEG << " deg" );
-    SG_LOG( SG_FLIGHT, SG_INFO, "  Pitch Angle: "
-            << Propagate->GetEuler(FGJSBBase::eTht)*RADTODEG << " deg" );
-    SG_LOG( SG_FLIGHT, SG_INFO, "  True Heading: "
-            << Propagate->GetEuler(FGJSBBase::ePsi)*RADTODEG << " deg" );
-    SG_LOG( SG_FLIGHT, SG_INFO, "  Latitude: "
-            << Propagate->GetLocation().GetLatitudeDeg() << " deg" );
-    SG_LOG( SG_FLIGHT, SG_INFO, "  Longitude: "
-            << Propagate->GetLocation().GetLongitudeDeg() << " deg" );
-    SG_LOG( SG_FLIGHT, SG_INFO, "  Altitude: "
-            << Propagate->GetAltitudeASL() << " feet" );
-    SG_LOG( SG_FLIGHT, SG_INFO, "  loaded initial conditions" );
-
- <latitude unit="DEG">   47.0 </latitude>
-  <longitude unit="DEG"> 122.0 </longitude>
-  <phi>         0.0 </phi>
-  <theta>       0.0 </theta>
-  <psi unit="DEG">       150.0 </psi>
-  <altitude>    2000.00 </altitude>
-
-
-   FCS->SetDaCmd( globals->get_controls()->get_aileron());
-    FCS->SetRollTrimCmd( globals->get_controls()->get_aileron_trim() );
-    FCS->SetDeCmd( globals->get_controls()->get_elevator());
-    FCS->SetPitchTrimCmd( globals->get_controls()->get_elevator_trim() );
-    FCS->SetDrCmd( -globals->get_controls()->get_rudder() );
-    FCS->SetDsCmd( globals->get_controls()->get_rudder() );
-    FCS->SetYawTrimCmd( -globals->get_controls()->get_rudder_trim() );
-    FCS->SetDfCmd( globals->get_controls()->get_flaps() );
-    FCS->SetDsbCmd( globals->get_controls()->get_speedbrake() );
-    FCS->SetDspCmd( globals->get_controls()->get_spoilers() );
-#endif
-
-//JSBSim::FGFDMExec fdmex;
-//jsbsimInterface_t iface(fdmex);
-
-//termsVec in  = {terms_t("aaa","bbbb", []{return fdmex.GetPropagate()->GetLocation().GetLongitudeDeg(); } ) };
-// input files
-std::string ac = "c172r";
-std::string scr = "";
-std::string reset = "reset00";
-
-int exitFlag = 0;
-
-int main(int argc, char* argv[])
-{
-      std::cout << "count of args " << argc << std::endl;
-      for (int i=0;i<argc;i++)
-      {
-         std::cout << "  " << argv[i] << std::endl;
-      }
-/* the arguments must be:
- *                  websocket port
- *                  aircraft xml file
- *                  script xml file
- *                  reset xml file
- */
-//jsbsimInterface_t iface(fdmex);
-        if (fdmex.LoadModel( ac , true ) )
-        {
-           fdmex.RunIC(); // loop JSBSim once w/o integrating
-           std::cout << "the ic object is " << fdmex.GetIC() << std::endl;
-           while (fdmex.Run() && !exitFlag) 
-           {
-               usleep ( 33333 );
-           }
-        }
-        //copy_to_JSBsim(); // copy control inputs to JSBSim
-        //fdmex->RunIC(); // loop JSBSim once w/o integrating
-        //copy_from_JSBsim(); // update the bus
-#if 0
-        fdmex->LoadScript( ScriptName ); // the script loads the aircraft and
-        result = FDMExec->Run();
-        while (result) 
-        { // cyclic execution
-           result = FDMExec->Run(); // execute JSBSim
-        }
-#endif
-	printf("normal exit\n");
-	return 0;
-}
-#endif
-
 //////////////////////////////////////////////////////////
 #include "sim.hpp"
 #include "simConnection.hpp"
@@ -216,9 +105,9 @@ public:
             return;
         }
         
-        std::stringstream val;
-        val << "count is " << m_count++;
-        
+        // set timer for next telemetry check
+        set_timer();
+
         // Broadcast count to all connections
         con_list::iterator it;
         for (it = m_connections.begin(); it != m_connections.end(); ++it) {
@@ -226,12 +115,11 @@ public:
                m_endpoint.send(*it,Sim->exportData() ,websocketpp::frame::opcode::text);
             }
         }
+        m_count++;
         
         if (Sim) {
            Sim->tick();
         } 
-        // set timer for next telemetry check
-        set_timer();
     }
 
     void on_http(connection_hdl hdl) {
@@ -301,9 +189,12 @@ typedef server::message_ptr message_ptr;
 
 // Define a callback to handle incoming messages
 void on_message(websocketpp::connection_hdl hdl, message_ptr msg) {
-    std::cout << "on_message called with hdl: " << hdl.lock().get() 
-              << " and message (" << msg->get_payload().size() << "): " << msg->get_payload()
-              << std::endl;
+    //std::cout << "on_message called with hdl: " << hdl.lock().get() 
+    //          << " and message (" << msg->get_payload().size() << "): " << msg->get_payload()
+    //          << std::endl;
+    if (Sim) {
+       Sim->importData( std::string( msg->get_payload() ) );
+    }
    #if 0 
     try {
         s->send(hdl, msg->get_payload(), msg->get_opcode());
