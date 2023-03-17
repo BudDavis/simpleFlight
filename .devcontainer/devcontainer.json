@@ -2,6 +2,7 @@
     "build": {"dockerfile":"Dockerfile"},
     "features": {
   },
+  "postCreateCommand": "/bin/bash -c \"sudo apt-get install JSBSim-devel_1.1.13-986.focal.amd64.deb\"",
   "customizations": {
       "vscode": {
           "extensions": [
