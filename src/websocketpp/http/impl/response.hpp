@@ -181,6 +181,11 @@ inline std::string response::raw() const {
     std::stringstream ret;
 
     ret << get_version() << " " << m_status_code << " " << m_status_msg;
+    
+    //  Look
+    ret << "\r\n" << "Content-type: text/html; charset=utf-8";
+    // End Look
+
     ret << "\r\n" << raw_headers() << "\r\n";
 
     ret << m_body;
