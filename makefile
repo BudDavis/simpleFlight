@@ -3,7 +3,7 @@
 CC=g++
 
 JSBSIM_LIB+=/usr/local/lib
-JSBSIM_INC+=/usr/local/include/JSBSim
+JSBSIM_INC+=/usr/include/JSBSim
 
 CXXFLAGS+=-Wall -Wextra -std=c++14 -g -O0
 CPPFLAGS+=-I${JSBSIM_INC} \
